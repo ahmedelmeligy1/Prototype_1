@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>النخبة للخدمات | تواصل معنا</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .page-hero {
+      min-height: 52vh; display: flex; align-items: flex-end;
+      position: relative; overflow: hidden;
+      padding: calc(var(--nav-h) + 3rem) 6vw 4rem;
+    }
+    .page-hero img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; filter: brightness(0.28) grayscale(20%);
+    }
+    .page-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.92) 25%, transparent 100%);
+    }
+    .page-hero-content { position: relative; z-index: 2; }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; color: var(--white-dim); margin-bottom: 1rem;
+    }
+    .breadcrumb a { color: var(--gold); text-decoration: none; }
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900; line-height: 1.05;
+    }
+    .page-hero h1 span { color: var(--gold); }
+
+    /* CONTACT SECTION */
+    .contact-section { padding: 7rem 6vw; background: var(--dark2); }
+    .contact-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 5rem; align-items: start; }
+
+    /* INFO */
+    .contact-info-col { display: flex; flex-direction: column; gap: 0; }
+    .c-item {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1.6rem; border: 1px solid rgba(201,168,76,0.1);
+      margin-bottom: 1px; background: var(--dark3);
+      transition: border-color 0.3s, background 0.3s;
+      text-decoration: none;
+    }
+    .c-item:hover { border-color: rgba(201,168,76,0.3); background: var(--dark4); }
+    .c-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: rgba(201,168,76,0.09); border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .c-item:hover .c-icon { background: var(--gold); border-color: var(--gold); }
+    .c-icon i { color: var(--gold); font-size: 1.1rem; transition: color 0.3s; }
+    .c-item:hover .c-icon i { color: var(--black); }
+    .c-label { font-size: 0.73rem; font-weight: 700; letter-spacing: 1px; color: var(--gold); margin-bottom: 0.3rem; }
+    .c-val { color: var(--white); font-size: 0.95rem; line-height: 1.5; }
+
+    .whatsapp-block {
+      margin-top: 2rem; padding: 2rem; background: rgba(37,211,102,0.07);
+      border: 1px solid rgba(37,211,102,0.2);
+    }
+    .wa-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+      background: #25D366; color: #fff; text-decoration: none;
+      font-weight: 700; font-size: 1.05rem; padding: 1rem 1.5rem;
+      transition: all 0.3s; margin-top: 1rem;
+    }
+    .wa-btn:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.25); }
+    .wa-btn i { font-size: 1.4rem; }
+
+    .hours { margin-top: 2rem; padding: 1.8rem; background: var(--dark3); border: 1px solid rgba(201,168,76,0.1); }
+    .hours h4 { font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; color: var(--gold); margin-bottom: 1.2rem; }
+    .hours-row { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid rgba(201,168,76,0.07); font-size: 0.88rem; }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { color: var(--white-dim); }
+    .hours-row .time { color: var(--white); font-weight: 600; }
+    .open { color: var(--gold) !important; }
+
+    /* FORM */
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .f-group { display: flex; flex-direction: column; gap: 0.45rem; }
+    .f-group label { font-size: 0.78rem; color: var(--gold); font-weight: 700; letter-spacing: 0.5px; }
+    .f-group input,
+    .f-group select,
+    .f-group textarea {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.15);
+      color: var(--white); font-family: var(--font-body); font-size: 0.95rem;
+      padding: 0.88rem 1rem; outline: none; transition: border-color 0.3s;
+      resize: none; direction: rtl;
+    }
+    .f-group input:focus,
+    .f-group select:focus,
+    .f-group textarea:focus { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.04); }
+    .f-group input::placeholder,
+    .f-group textarea::placeholder { color: rgba(240,235,224,0.25); }
+    .f-group select option { background: var(--dark2); }
+    .f-group textarea { min-height: 140px; }
+
+    .send-btn {
+      width: 100%; padding: 1rem; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+    }
+
+    .success-msg {
+      display: none; background: rgba(37,211,102,0.1);
+      border: 1px solid rgba(37,211,102,0.3);
+      color: #25D366; padding: 1rem 1.5rem;
+      font-size: 0.95rem; font-weight: 600;
+      align-items: center; gap: 0.7rem;
+    }
+    .success-msg.show { display: flex; }
+
+    /* MAP PLACEHOLDER */
+    .map-section { padding: 0 6vw 7rem; background: var(--dark2); }
+    .map-wrap {
+      position: relative; overflow: hidden; height: 380px;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+    .map-wrap iframe { width: 100%; height: 100%; border: none; filter: grayscale(80%) invert(10%) brightness(0.8); }
+    .map-overlay {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: rgba(8,8,8,0.92); border: 1px solid rgba(201,168,76,0.2);
+      padding: 1.2rem 1.5rem; backdrop-filter: blur(12px);
+    }
+    .map-overlay h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--gold); margin-bottom: 0.4rem; }
+    .map-overlay p { font-size: 0.82rem; color: var(--white-dim); }
+
+    /* FAQ */
+    .faq { padding: 7rem 6vw; background: var(--black); }
+    .faq-list { margin-top: 3.5rem; display: flex; flex-direction: column; gap: 1px; background: rgba(201,168,76,0.1); }
+    .faq-item { background: var(--dark2); }
+    .faq-q {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 2rem; color: var(--white); font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600; text-align: right; direction: rtl;
+      transition: color 0.3s;
+    }
+    .faq-q:hover { color: var(--gold); }
+    .faq-q i { color: var(--gold); transition: transform 0.3s; flex-shrink: 0; }
+    .faq-item.open .faq-q i { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+    }
+    .faq-item.open .faq-a { max-height: 300px; }
+    .faq-a p { padding: 0 2rem 1.5rem; color: var(--white-dim); font-size: 0.92rem; line-height: 1.9; }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">النخبة <span>للخدمات</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="about.html">من نحن</a></li>
+    <li><a href="services.html">خدماتنا</a></li>
+    <li><a href="contact.html">تواصل معنا</a></li>
+  </ul>
+  <button class="hamburger" id="hbtn"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">الرئيسية</a>
+  <a href="about.html">من نحن</a>
+  <a href="services.html">خدماتنا</a>
+  <a href="contact.html">تواصل معنا</a>
+</div>
+
+<div class="page-hero">
+  <img src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1400&q=80" alt="تواصل معنا"/>
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">الرئيسية</a>
+      <i class="fa-solid fa-chevron-left" style="font-size:0.65rem"></i>
+      <span>تواصل معنا</span>
+    </div>
+    <h1>تواصل <span>معنا</span></h1>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <div class="contact-layout">
+
+    <!-- INFO -->
+    <div>
+      <div class="tag reveal">بياناتنا</div>
+      <h2 class="sec-title reveal">نحن هنا<br/><span style="color:var(--gold)">من أجلك</span></h2>
+      <div class="gold-line reveal"></div>
+      <p class="sec-desc reveal" style="margin-bottom:2rem">لا تتردد في التواصل معنا بأي وسيلة تناسبك. فريقنا دائماً مستعد للإجابة على استفساراتك.</p>
+
+      <div class="contact-info-col">
+        <a href="tel:+201234567890" class="c-item reveal">
+          <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
+          <div><div class="c-label">الهاتف</div><div class="c-val">+20 123 456 7890</div></div>
+        </a>
+        <a href="tel:+201098765432" class="c-item reveal">
+          <div class="c-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+          <div><div class="c-label">هاتف احتياطي</div><div class="c-val">+20 109 876 5432</div></div>
+        </a>
+        <a href="mailto:info@elnokba.com" class="c-item reveal">
+          <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div><div class="c-label">البريد الإلكتروني</div><div class="c-val">info@elnokba.com</div></div>
+        </a>
+        <div class="c-item reveal" style="cursor:default">
+          <div class="c-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div><div class="c-label">العنوان</div><div class="c-val">القاهرة، مصر الجديدة<br/>شارع النزهة، برج المهندسين، الدور الخامس</div></div>
+        </div>
+      </div>
+
+      <div class="whatsapp-block reveal">
+        <p style="font-size:0.85rem;color:var(--white-dim);line-height:1.8">تفضل التواصل السريع؟ راسلنا عبر واتساب وسنرد عليك في أقل من ساعة!</p>
+        <a href="https://wa.me/201234567890" target="_blank" class="wa-btn">
+          <i class="fa-brands fa-whatsapp"></i>
+          تواصل عبر واتساب
+        </a>
+      </div>
+
+      <div class="hours reveal">
+        <h4>أوقات الدوام</h4>
+        <div class="hours-row"><span class="day">الأحد — الخميس</span><span class="time open">9:00 ص — 6:00 م</span></div>
+        <div class="hours-row"><span class="day">السبت</span><span class="time">10:00 ص — 3:00 م</span></div>
+        <div class="hours-row"><span class="day">الجمعة</span><span class="time" style="color:rgba(240,235,224,0.35)">مغلق</span></div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="reveal">
+      <div class="tag">أرسل رسالة</div>
+      <h3 style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;margin-bottom:1.5rem">
+        حدثنا عن <span style="color:var(--gold)">مشروعك</span>
+      </h3>
+
+      <div class="success-msg" id="successMsg">
+        <i class="fa-solid fa-circle-check" style="font-size:1.3rem"></i>
+        تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.
+      </div>
+
+      <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="f-group">
+            <label>الاسم الأول *</label>
+            <input type="text" placeholder="محمد" required/>
+          </div>
+          <div class="f-group">
+            <label>الاسم الأخير *</label>
+            <input type="text" placeholder="أحمد" required/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="f-group">
+            <label>رقم الهاتف *</label>
+            <input type="tel" placeholder="+20 ..." required/>
+          </div>
+          <div class="f-group">
+            <label>البريد الإلكتروني</label>
+            <input type="email" placeholder="example@mail.com"/>
+          </div>
+        </div>
+        <div class="f-group">
+          <label>الخدمة المطلوبة *</label>
+          <select required>
+            <option value="" disabled selected>اختر الخدمة...</option>
+            <option>الاستشارات الإدارية</option>
+            <option>التسويق الرقمي</option>
+            <option>التصميم الإبداعي</option>
+            <option>تطوير المواقع</option>
+            <option>خدمة العملاء</option>
+            <option>الخدمات المالية</option>
+            <option>أخرى</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label>رسالتك *</label>
+          <textarea placeholder="أخبرنا عن مشروعك أو استفسارك بالتفصيل..." required></textarea>
+        </div>
+        <button type="submit" class="btn-gold send-btn" id="sendBtn">
+          <i class="fa-solid fa-paper-plane"></i>
+          إرسال الرسالة
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<div class="map-section">
+  <div class="tag reveal">موقعنا</div>
+  <h3 class="sec-title reveal" style="margin-bottom:2rem">اعثر علينا على <span style="color:var(--gold)">الخريطة</span></h3>
+  <div class="map-wrap reveal">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110502.7744948025!2d31.18880545!3d30.06263185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2sCairo%2C%20Egypt!5e0!3m2!1sen!2s!4v1699999999999!5m2!1sen!2s"
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    <div class="map-overlay">
+      <h4><i class="fa-solid fa-location-dot" style="margin-left:0.4rem"></i> النخبة للخدمات</h4>
+      <p>القاهرة، مصر الجديدة<br/>برج المهندسين، الدور الخامس</p>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="tag reveal">الأسئلة الشائعة</div>
+  <h2 class="sec-title reveal">أسئلة <span style="color:var(--gold)">يسألها</span> عملاؤنا</h2>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        كيف يمكنني البدء في التعاون معكم؟
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <div class="faq-a"><p>ببساطة، تواصل معنا عبر الهاتف أو البريد الإلكتروني أو واتساب، وسيتواصل معك أحد مستشارينا خلال 24 ساعة لمناقشة احتياجاتك وتقديم أفضل الحلول.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        هل تقدمون استشارة مجانية قبل التعاقد؟
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <div class="faq-a"><p>نعم! نقدم جلسة استشارية مجانية لكل عميل جديد لمدة تصل إلى ساعة، نناقش فيها احتياجاتك ونقترح أفضل الحلول المناسبة لك ولميزانيتك.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ما هي مناطق التغطية التي تعملون فيها؟
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <div class="faq-a"><p>نعمل في جميع أنحاء جمهورية مصر العربية، كما نقدم خدماتنا لعملاء في دول الخليج العربي وبقية الوطن العربي عن بُعد بكفاءة كاملة.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        كم يستغرق تنفيذ المشاريع عادةً؟
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <div class="faq-a"><p>يختلف الوقت حسب طبيعة المشروع وتعقيده. المشاريع البسيطة تستغرق من 3 إلى 7 أيام، بينما المشاريع الكبيرة قد تستغرق من شهر إلى ثلاثة أشهر. نحدد لك جدولاً زمنياً واضحاً قبل البدء.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">النخبة <span>للخدمات</span></div>
+      <p>شريكك الموثوق في بناء مستقبل أعمالك وتحقيق أهدافك بأعلى مستويات الاحترافية.</p>
+    </div>
+    <div class="footer-links">
+      <h4>الصفحات</h4>
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="services.html">خدماتنا</a></li>
+        <li><a href="contact.html">تواصل معنا</a></li>
+      </ul>
+    </div>
+    <div class="footer-social">
+      <h4>تابعنا</h4>
+      <div class="social-row">
+        <a href="#" class="soc-btn"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="soc-btn"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="soc-btn"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="soc-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>شركة النخبة للخدمات المتكاملة</span>. جميع الحقوق محفوظة.</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  function submitForm(e) {
+    e.preventDefault();
+    const btn = document.getElementById('sendBtn');
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الإرسال...';
+    btn.disabled = true;
+    setTimeout(() => {
+      document.getElementById('contactForm').reset();
+      document.getElementById('successMsg').classList.add('show');
+      btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> إرسال الرسالة';
+      btn.disabled = false;
+      setTimeout(() => document.getElementById('successMsg').classList.remove('show'), 5000);
+    }, 1800);
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>

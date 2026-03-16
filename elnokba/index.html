@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>النخبة للخدمات | الرئيسية</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden; padding: 0 6vw;
+      padding-top: var(--nav-h);
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 75% 65% at 65% 55%, rgba(201,168,76,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 60% at 15% 75%, rgba(201,168,76,0.04) 0%, transparent 50%),
+        linear-gradient(160deg, #080808 0%, #111 60%, #0a0a0a 100%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.035) 1px, transparent 1px);
+      background-size: 65px 65px;
+      mask-image: radial-gradient(ellipse 75% 70% at center, black, transparent);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 680px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.06);
+      color: var(--gold); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 2px; padding: 0.4rem 1rem; margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 5.8rem);
+      font-weight: 900; line-height: 1.05; letter-spacing: -1px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+    .hero-title .accent { color: var(--gold); }
+    .hero-desc {
+      font-size: clamp(0.98rem, 2vw, 1.12rem);
+      color: var(--white-dim); line-height: 1.95;
+      max-width: 520px; margin-bottom: 2.5rem;
+      animation: fadeUp 0.8s ease 0.6s both;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.8s both;
+    }
+    .hero-stats {
+      position: absolute; bottom: 7vh; left: 6vw;
+      display: flex; gap: 3.5rem;
+      animation: fadeUp 0.8s ease 1s both;
+    }
+    .stat { text-align: center; }
+    .stat-n {
+      font-family: var(--font-display);
+      font-size: 2.4rem; font-weight: 900;
+      color: var(--gold); line-height: 1;
+    }
+    .stat-l {
+      font-size: 0.75rem; color: var(--white-dim);
+      letter-spacing: 1px; margin-top: 0.2rem;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2.2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.5rem; color: var(--white-dim); font-size: 0.68rem;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      animation: bounce 2.2s infinite;
+    }
+    .scroll-hint i { color: var(--gold); }
+
+    /* ── INTRO STRIP ── */
+    .strip {
+      background: var(--gold); padding: 1.4rem 6vw;
+      display: flex; align-items: center; justify-content: center;
+      gap: 3rem; flex-wrap: wrap;
+    }
+    .strip-item {
+      display: flex; align-items: center; gap: 0.8rem;
+      color: var(--black); font-weight: 700; font-size: 0.9rem;
+    }
+    .strip-item i { font-size: 1.2rem; }
+
+    /* ── SERVICES PREVIEW ── */
+    .services-preview { padding: 7rem 6vw; background: var(--dark2); }
+    .preview-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 3.5rem; gap: 2rem; flex-wrap: wrap;
+    }
+    .preview-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+      background: rgba(201,168,76,0.12);
+    }
+    .prev-card {
+      background: var(--dark3); padding: 0;
+      overflow: hidden; position: relative; transition: transform 0.4s;
+    }
+    .prev-card:hover { transform: translateY(-5px); z-index: 2; }
+    .prev-card img {
+      width: 100%; height: 200px; object-fit: cover;
+      filter: grayscale(35%) brightness(0.85);
+      transition: filter 0.5s, transform 0.5s;
+      display: block;
+    }
+    .prev-card:hover img { filter: grayscale(0%) brightness(1); transform: scale(1.05); }
+    .prev-card-body { padding: 1.8rem; position: relative; }
+    .prev-card-body::before {
+      content: ''; position: absolute;
+      bottom: 0; right: 0; width: 0; height: 2px;
+      background: var(--gold); transition: width 0.4s;
+    }
+    .prev-card:hover .prev-card-body::before { width: 100%; }
+    .prev-icon {
+      width: 46px; height: 46px;
+      background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.2rem; transition: all 0.4s;
+    }
+    .prev-card:hover .prev-icon { background: var(--gold); border-color: var(--gold); }
+    .prev-icon i { color: var(--gold); font-size: 1.2rem; transition: color 0.4s; }
+    .prev-card:hover .prev-icon i { color: var(--black); }
+    .prev-card h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .prev-card p { color: var(--white-dim); font-size: 0.88rem; line-height: 1.8; }
+
+    /* ── WHY US ── */
+    .why { padding: 7rem 6vw; background: var(--black); }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .why-img-wrap {
+      position: relative; aspect-ratio: 3/4; overflow: hidden;
+    }
+    .why-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(25%) contrast(1.05); transition: transform 0.6s;
+    }
+    .why-img-wrap:hover img { transform: scale(1.04); }
+    .why-img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(150deg, transparent 50%, rgba(201,168,76,0.12));
+    }
+    .why-frame {
+      position: absolute; bottom: -18px; right: -18px;
+      width: 55%; height: 55%;
+      border: 1px solid rgba(201,168,76,0.3); pointer-events: none;
+    }
+    .why-badge {
+      position: absolute; top: 2rem; left: -1.5rem;
+      background: var(--gold); color: var(--black);
+      padding: 1.1rem 1.4rem; text-align: center;
+      box-shadow: 0 10px 40px rgba(201,168,76,0.25);
+    }
+    .why-badge .n { font-family: var(--font-display); font-size: 2.4rem; font-weight: 900; line-height: 1; }
+    .why-badge .l { font-size: 0.68rem; font-weight: 700; letter-spacing: 1px; margin-top: 0.2rem; }
+    .why-points { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .why-point {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.2rem; border: 1px solid rgba(201,168,76,0.1);
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .why-point:hover { border-color: rgba(201,168,76,0.3); background: rgba(201,168,76,0.04); }
+    .why-point-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(201,168,76,0.1);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .why-point-icon i { color: var(--gold); }
+    .why-point h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .why-point p { font-size: 0.85rem; color: var(--white-dim); line-height: 1.7; }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      padding: 5rem 6vw; background: var(--dark2);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .cta-band h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+    }
+    .cta-band h2 span { color: var(--gold); }
+    .cta-band p { color: var(--white-dim); font-size: 1rem; margin-top: 0.5rem; max-width: 460px; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(9px); }
+    }
+    @media (max-width: 900px) {
+      .preview-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-stats { display: none; }
+      .why-frame { display: none; }
+      .why-badge { left: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">النخبة <span>للخدمات</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="about.html">من نحن</a></li>
+    <li><a href="services.html">خدماتنا</a></li>
+    <li><a href="contact.html">تواصل معنا</a></li>
+  </ul>
+  <button class="hamburger" id="hbtn" aria-label="القائمة">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">الرئيسية</a>
+  <a href="about.html">من نحن</a>
+  <a href="services.html">خدماتنا</a>
+  <a href="contact.html">تواصل معنا</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fa-solid fa-star" style="font-size:.7rem"></i> شريكك الأول في النجاح</div>
+    <h1 class="hero-title">نبني معك<br/><span class="accent">مستقبلاً</span><br/>مختلفاً</h1>
+    <p class="hero-desc">شركة النخبة للخدمات المتكاملة — نقدم حلولاً احترافية مصممة خصيصاً لتلبية احتياجاتك، بجودة عالية وخبرة تمتد لأكثر من عشر سنوات في السوق المحلي والإقليمي.</p>
+    <div class="hero-cta">
+      <a href="services.html" class="btn-gold"><i class="fa-solid fa-arrow-left"></i> استكشف خدماتنا</a>
+      <a href="contact.html" class="btn-outline"><i class="fa-solid fa-phone"></i> تواصل الآن</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">+500</div><div class="stat-l">عميل راضٍ</div></div>
+    <div class="stat"><div class="stat-n">10+</div><div class="stat-l">سنوات خبرة</div></div>
+    <div class="stat"><div class="stat-n">98%</div><div class="stat-l">نسبة رضا</div></div>
+  </div>
+  <div class="scroll-hint"><span>تمرير</span><i class="fa-solid fa-chevron-down"></i></div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item"><i class="fa-solid fa-shield-halved"></i> جودة مضمونة ١٠٠٪</div>
+  <div class="strip-item"><i class="fa-solid fa-clock"></i> دعم على مدار الساعة</div>
+  <div class="strip-item"><i class="fa-solid fa-medal"></i> خبرة أكثر من ١٠ سنوات</div>
+  <div class="strip-item"><i class="fa-solid fa-users"></i> فريق متخصص محترف</div>
+</div>
+
+<!-- SERVICES PREVIEW -->
+<section class="services-preview">
+  <div class="preview-header">
+    <div>
+      <div class="tag reveal">ما نقدمه</div>
+      <h2 class="sec-title reveal">خدماتنا<br/><span class="accent">المميزة</span></h2>
+    </div>
+    <p class="sec-desc reveal" style="max-width:350px">نوفر طيفاً واسعاً من الخدمات الاحترافية لتلبية احتياجاتك.</p>
+  </div>
+  <div class="preview-grid">
+    <div class="prev-card reveal">
+      <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=75" alt="استشارات"/>
+      <div class="prev-card-body">
+        <div class="prev-icon"><i class="fa-solid fa-lightbulb"></i></div>
+        <h3>الاستشارات الإدارية</h3>
+        <p>نقدم استشارات متخصصة تساعدك على اتخاذ القرارات الصحيحة وتطوير استراتيجيات فعالة.</p>
+      </div>
+    </div>
+    <div class="prev-card reveal">
+      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=75" alt="تسويق"/>
+      <div class="prev-card-body">
+        <div class="prev-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>التسويق الرقمي</h3>
+        <p>نضع خطط تسويقية مدروسة تُعزز حضورك الرقمي وتوصلك لجمهورك المستهدف.</p>
+      </div>
+    </div>
+    <div class="prev-card reveal">
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=75" alt="تطوير"/>
+      <div class="prev-card-body">
+        <div class="prev-icon"><i class="fa-solid fa-code"></i></div>
+        <h3>تطوير المواقع</h3>
+        <p>نبني مواقع إلكترونية احترافية سريعة وجذابة تمنح عملاءك تجربة استثنائية.</p>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:3rem">
+    <a href="services.html" class="btn-outline reveal">عرض جميع الخدمات <i class="fa-solid fa-arrow-left"></i></a>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="why-grid">
+    <div class="why-img-wrap reveal">
+      <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=700&q=75" alt="لماذا نحن"/>
+      <div class="why-frame"></div>
+      <div class="why-badge"><div class="n">10+</div><div class="l">سنة خبرة</div></div>
+    </div>
+    <div class="reveal">
+      <div class="tag">لماذا نحن؟</div>
+      <h2 class="sec-title">نختلف لأننا<br/><span class="accent">نهتم</span> فعلاً</h2>
+      <div class="gold-line"></div>
+      <p class="sec-desc">نؤمن بأن العلاقة مع عملائنا تتجاوز مجرد تقديم خدمة — نحن شركاء في النجاح.</p>
+      <div class="why-points">
+        <div class="why-point">
+          <div class="why-point-icon"><i class="fa-solid fa-trophy"></i></div>
+          <div><h4>جودة لا تُقارن</h4><p>نلتزم بأعلى معايير الجودة في كل ما نقدمه دون أي تنازل.</p></div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div><h4>التسليم في الوقت</h4><p>نحترم وقتك ونلتزم بالمواعيد المتفق عليها دائماً.</p></div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon"><i class="fa-solid fa-headset"></i></div>
+          <div><h4>دعم متواصل</h4><p>فريق دعم متاح على مدار الساعة للإجابة على جميع استفساراتك.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="reveal">
+    <h2>هل أنت مستعد للبدء <span>معنا؟</span></h2>
+    <p>تواصل مع فريقنا اليوم واحصل على استشارة مجانية لمشروعك.</p>
+  </div>
+  <div class="reveal">
+    <a href="contact.html" class="btn-gold" style="font-size:1rem;padding:1rem 2.5rem">
+      ابدأ الآن <i class="fa-solid fa-arrow-left"></i>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">النخبة <span>للخدمات</span></div>
+      <p>شريكك الموثوق في بناء مستقبل أعمالك وتحقيق أهدافك بأعلى مستويات الاحترافية.</p>
+    </div>
+    <div class="footer-links">
+      <h4>الصفحات</h4>
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="services.html">خدماتنا</a></li>
+        <li><a href="contact.html">تواصل معنا</a></li>
+      </ul>
+    </div>
+    <div class="footer-social">
+      <h4>تابعنا</h4>
+      <div class="social-row">
+        <a href="#" class="soc-btn"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="soc-btn"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="soc-btn"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="soc-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>شركة النخبة للخدمات المتكاملة</span>. جميع الحقوق محفوظة.</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
